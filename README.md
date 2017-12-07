@@ -1,6 +1,6 @@
-# react-d3-radar
+# smartive-react-d3-radar
 
-[![Build Status](https://travis-ci.org/shauns/react-d3-radar.svg?branch=master)](https://travis-ci.org/shauns/react-d3-radar)
+[![Build Status](https://travis-ci.org/smartive/smartive-react-d3-radar.svg?branch=master)](https://travis-ci.org/smartive/smartive-react-d3-radar)
 
 <img src="http://i.imgur.com/rgJ7bXi.png" width="300">
 
@@ -15,7 +15,7 @@ This is a Radar chart component for displaying multiple sets of data. Hovering i
 ## Examples
 
 ```js
-import Radar from 'react-d3-radar';
+import Radar from 'smartive-react-d3-radar';
 <Radar
   width={500}
   height={500}
