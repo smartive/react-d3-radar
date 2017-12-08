@@ -20,6 +20,8 @@ const defaultRadarAxisStyle = {
   axisWidth: 2,
 };
 
+const MAX_LINE_LENGTH = 10;
+
 export default function RadarAxis(props: RadarAxisProps) {
   const {scale, offsetAngle, domainMax, label, color, style} = props;
   const {
@@ -29,9 +31,19 @@ export default function RadarAxis(props: RadarAxisProps) {
     fontFamily,
     textFill,
     axisWidth,
-  } = {...defaultRadarAxisStyle, style};
+  } = {...defaultRadarAxisStyle, ...style};
   const xFactor = Math.cos(offsetAngle - Math.PI / 2);
   const yFactor = Math.sin(offsetAngle - Math.PI / 2);
+  const x = scale(domainMax * labelOverreach) * xFactor;
+  const words = label.split(' ');
+  const parts = [];
+  for (const word of words) {
+    if (parts.length === 0 || parts[parts.length - 1].length + 1 + word.length > MAX_LINE_LENGTH) {
+      parts.push(word);
+    } else {
+      parts[parts.length - 1] += ` ${word}`;
+    }
+  }
   return (
     <g>
       <line
@@ -43,7 +55,7 @@ export default function RadarAxis(props: RadarAxisProps) {
         strokeWidth={axisWidth}
       />
       <text
-        x={scale(domainMax * labelOverreach) * xFactor}
+        x={x}
         y={scale(domainMax * labelOverreach) * yFactor}
         fontSize={fontSize}
         fontFamily={fontFamily}
@@ -51,7 +63,7 @@ export default function RadarAxis(props: RadarAxisProps) {
         textAnchor={'middle'}
         dy={'0.35em'}
       >
-        {label}
+        {parts.map((part, i) => <tspan key={i} x={x} dy={i ? '1.2em' : '0'}>{part}</tspan>)}
       </text>
     </g>
   );

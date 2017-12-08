@@ -25,8 +25,8 @@ type Props = {
 
 function convertData(props) {
   const {data, width, height, padding, domainMax} = props;
-  const innerHeight = height - padding * 2;
-  const innerWidth = width - padding * 2;
+  const innerHeight = height - padding * 2 - 32;
+  const innerWidth = width - padding * 2 - 32;
 
   const radius = Math.min(innerWidth / 2, innerHeight / 2);
   const scales = radiusScales(data.variables, domainMax, radius);

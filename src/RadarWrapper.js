@@ -124,16 +124,18 @@ export default class RadarWrapper extends Component {
           />
           <g transform={`translate(${innerWidth / 2}, ${innerHeight / 2})`}>
             {variables.map(({key, color}, i) => {
-              return (
-                <RadarSector
-                  key={key}
-                  scale={backgroundScale}
-                  offsetAngle={-Math.PI / 2 + offsetAngles[key] - Math.PI / variables.length}
-                  endAngle={-Math.PI / 2 + offsetAngles[variables[(i + 1) % variables.length].key] - Math.PI / variables.length}
-                  color={color}
-                  domainMax={domainMax}
-                />
-              )
+              if (color) {
+                return (
+                  <RadarSector
+                    key={key}
+                    scale={backgroundScale}
+                    offsetAngle={-Math.PI / 2 + offsetAngles[key] - Math.PI / variables.length}
+                    endAngle={-Math.PI / 2 + offsetAngles[variables[(i + 1) % variables.length].key] - Math.PI / variables.length}
+                    color={color}
+                    domainMax={domainMax}
+                  />
+                )
+              }
             })}
             <RadarRings
               ticks={ticks}
