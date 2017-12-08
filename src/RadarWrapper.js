@@ -4,6 +4,7 @@ import type {TickScale, RadarPoint, RadarVariable} from './types';
 import RadarAxis from './RadarAxis';
 import RadarCircle from './RadarCircle';
 import RadarRings from './RadarRings';
+import RadarSector from './RadarSector';
 
 type Props = {
   variables: Array<RadarVariable>,
@@ -122,6 +123,18 @@ export default class RadarWrapper extends Component {
             }
           />
           <g transform={`translate(${innerWidth / 2}, ${innerHeight / 2})`}>
+            {variables.map(({key, color}, i) => {
+              return (
+                <RadarSector
+                  key={key}
+                  scale={backgroundScale}
+                  offsetAngle={-Math.PI / 2 + offsetAngles[key] - Math.PI / variables.length}
+                  endAngle={-Math.PI / 2 + offsetAngles[variables[(i + 1) % variables.length].key] - Math.PI / variables.length}
+                  color={color}
+                  domainMax={domainMax}
+                />
+              )
+            })}
             <RadarRings
               ticks={ticks}
               scale={backgroundScale}
@@ -137,6 +150,7 @@ export default class RadarWrapper extends Component {
                   label={label}
                   domainMax={domainMax}
                   color={axisColor}
+                  style={style}
                 />
               );
             })}
